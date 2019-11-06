@@ -193,9 +193,9 @@ select
 --    tct.`typeconstructiondesc`,
 --    p.`censustractandblock`,
 --    pred.`transactiondate`,
-    pred.`logerror`,
-    m.`transactions`
+    pred.`logerror`
 --    ,
+--    m.`transactions`,
 --    p.`taxamount`/p.`taxvaluedollarcnt` tax_rate
 from 
     `properties_2017` p
