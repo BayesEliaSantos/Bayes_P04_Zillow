@@ -7,7 +7,6 @@ warnings.filterwarnings("ignore")
 
 import numpy as np
 import pandas as pd
-import pandas_profiling as pdspro
 
 
 ###############################################################################
