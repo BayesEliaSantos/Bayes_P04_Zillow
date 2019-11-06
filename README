@@ -1,3 +1,30 @@
 ##Readme
 
 Goal: Improve our original estimate of the log error by using clustering methodologies.
+
+3 features to focus on:
+    1- Location(zipcode -> Section -> Neighborhood)
+    2- Lot size
+    3- Livable Squarefeet (calculated squarefeet- ((number of bedrooms* bedroom size) + (bathroom count * bathroom size))
+
+
+Acquisition 
+
+Prep
+
+
+Initial Exploration
+
+
+
+Exploration with Clustering- Target(y) = LOGERROR
+
+
+
+Cluster Independent Variables
+
+
+ 1- Location(zipcode -> Section -> Neighborhood)
+    2- Lot size
+    3- Livable Squarefeet
+
