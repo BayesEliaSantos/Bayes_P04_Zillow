@@ -98,6 +98,27 @@ def convert_to_dates(df, cols=[], format='%Y-%m-%d', errors='coerce', **kwargs):
         df[col] = pd.to_datetime(df[col], errors=errors, format=format)
     return df    
 
+
+@timeifdebug
+def nulls_by_row(df):
+    total_cols = df.shape[1]
+    num_cols_missing = df.isnull().sum(axis=1)
+    pct_cols_missing = df.isnull().sum(axis=1)/ total_cols
+    rows_missing = (
+        pd.DataFrame(
+        {
+            'num_cols_missing': num_cols_missing, 
+            'pct_cols_missing': pct_cols_missing
+        }
+        )
+        .reset_index()
+        .groupby(['num_cols_missing','pct_cols_missing'])
+        .count()
+        .rename(index=str, columns={'index': 'num_rows'})
+        .reset_index()
+    )
+    return rows_missing 
+
 ###############################################################################
 ### split-scale functions                                                   ###
 ###############################################################################

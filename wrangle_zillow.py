@@ -136,7 +136,7 @@ select
 --    p.`buildingclasstypeid`,
 --    bct.`buildingclassdesc`,
 --    p.`buildingqualitytypeid`,
-    p.`calculatedbathnbr`,
+--    p.`calculatedbathnbr`,
     p.`calculatedfinishedsquarefeet`,
 --    p.`decktypeid`,
 --    p.`finishedfloor1squarefeet`,
@@ -155,8 +155,8 @@ select
 --    p.`hashottuborspa`,
 --    p.`heatingorsystemtypeid`,
 --    hst.`heatingorsystemdesc`,
-    p.`latitude`,
-    p.`longitude`,
+--    p.`latitude`,
+--    p.`longitude`,
 --    p.`lotsizesquarefeet`,
 --    p.`poolcnt`,
 --    p.`poolsizesum`,
@@ -164,8 +164,8 @@ select
 --    p.`pooltypeid2`,
 --    p.`pooltypeid7`,
 --    p.`propertycountylandusecode`,
-    p.`propertylandusetypeid`,
-    plut.`propertylandusedesc`,
+--    p.`propertylandusetypeid`,
+--    plut.`propertylandusedesc`,
 --    p.`propertyzoningdesc`,
 --    p.`rawcensustractandblock`,
 --    p.`regionidcity`,
@@ -218,9 +218,8 @@ inner join
     pred.parcelid = m.parcelid
     and pred.transactiondate = m.lasttransactiondate
 
-left join `propertylandusetype` plut
-    on p.`propertylandusetypeid` = plut.`propertylandusetypeid`
-        
+-- left join `propertylandusetype` plut
+--     on p.`propertylandusetypeid` = plut.`propertylandusetypeid`
 -- left join svi_db.svi2016_us_county svi
 --     on p.`fips` = svi.`FIPS`
 -- left join `airconditioningtype` act
@@ -237,7 +236,10 @@ left join `propertylandusetype` plut
 --     using(`typeconstructiontypeid`)
 
 where 
-    p.`latitude` is not null
+    p.`propertylandusetypeid` = 261
+    and p.`bathroomcnt` * p.`bedroomcnt` <> 0
+    and p.`calculatedfinishedsquarefeet` is not null
+    and p.`latitude` is not null
     and p.`longitude` is not null;
 '''
 }
