@@ -341,6 +341,7 @@ def scale_dfo(dfo, scaler_fn=standard_scaler, splain=local_settings.splain, **kw
 ### value analysis functions                                                ###
 ###############################################################################
 
+@timeifdebug
 def get_column_values_stats(
         df, 
         get_cols=[], 
@@ -366,11 +367,11 @@ def get_column_values_stats(
     Report shows the following information about the columns of the dataframe:
         cols: column name
         dtypes: data type
-        row_values: number of rows with non-null values 
-        rows_missing: number of rows with missing values
-        pctg_missing: percentage of rows with missing values
-        nunuiques: number of unique values 
-        uniques: list of unique values if the unique value count is less than 
+        num_rows_values: number of rows with non-null values 
+        num_rows_missing: number of rows with missing values
+        pct_rows_missing: percentage of rows with missing values
+        num_uniques: number of unique values 
+        unique_values: list of unique values if the unique value count is less than 
             or equal to max_uniques.
         
     If the input dataframe contains the target column, enter that name as the 
@@ -406,18 +407,18 @@ def get_column_values_stats(
     
     # get statistics on all columns
     df_cols['dtype'] = df_cols.cols.apply(lambda x: df[x].dtype)
-    df_cols['row_values'] = df_cols.cols.apply(lambda x: df[x].count())
-    df_cols['rows_missing'] = num_recs - df_cols.row_values
-    df_cols['pct_missing'] = df_cols.rows_missing / num_recs
-    df_cols['nuniques'] = df_cols.cols.apply(lambda x: df[x].nunique())
+    df_cols['num_rows_values'] = df_cols.cols.apply(lambda x: df[x].count())
+    df_cols['num_rows_missing'] = num_recs - df_cols.num_rows_values
+    df_cols['pct_rows_missing'] = df_cols.num_rows_missing / num_recs
+    df_cols['num_uniques'] = df_cols.cols.apply(lambda x: df[x].nunique())
     
     # get unique valeues for columns within unique value limits
-    df_cats = df_cols[df_cols.nuniques <= max_uniques]
-    df_cats['uniques'] = df_cats.cols.apply(lambda x: df[x].unique())
+    df_cats = df_cols[df_cols.num_uniques <= max_uniques]
+    df_cats['unique_values'] = df_cats.cols.apply(lambda x: df[x].unique())
     
     # merge and set index
     join_type = 'inner' if limit_to_max else 'left'
-    df_cols = df_cols.join(df_cats.uniques, how=join_type)
+    df_cols = df_cols.join(df_cats.unique_values, how=join_type)
     return df_cols.set_index('cols')
 
 
