@@ -46,6 +46,8 @@ def plot_2d_clusters(df, x_col, y_col, c_col, alpha=.05, marker='x', s=1000, c='
     for cluster in df[c_col].unique():
         subset = df[df[c_col] == cluster]
         plt.scatter(df[x_col], df[y_col], label=cluster, alpha=alpha)
+    plt.xlabel(x_col)
+    plt.ylabel(y_col)
     plt.legend()
     plt.scatter(centers[x_col], centers[y_col], marker=marker, s=s, c=c)
 

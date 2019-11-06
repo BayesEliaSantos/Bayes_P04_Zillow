@@ -155,8 +155,8 @@ select
 --    p.`hashottuborspa`,
 --    p.`heatingorsystemtypeid`,
 --    hst.`heatingorsystemdesc`,
---    p.`latitude`,
---    p.`longitude`,
+    p.`latitude`,
+    p.`longitude`,
 --    p.`lotsizesquarefeet`,
 --    p.`poolcnt`,
 --    p.`poolsizesum`,
@@ -183,7 +183,7 @@ select
 --    p.`yearbuilt`,
 --    p.`numberofstories`,
 --    p.`fireplaceflag`,
---    p.`structuretaxvaluedollarcnt`,
+    p.`structuretaxvaluedollarcnt`,
 --    p.`assessmentyear`,
 --    p.`landtaxvaluedollarcnt`,
 --    p.`taxamount`,
@@ -193,10 +193,10 @@ select
 --    tct.`typeconstructiondesc`,
 --    p.`censustractandblock`,
 --    pred.`transactiondate`,
-    pred.`logerror`
---    ,
 --    m.`transactions`,
 --    p.`taxamount`/p.`taxvaluedollarcnt` tax_rate
+    (p.`structuretaxvaluedollarcnt` / p.`calculatedfinishedsquarefeet`) structuredollarpersqft,
+    pred.`logerror`
 from 
     `properties_2017` p
 inner join `predictions_2017`  pred
@@ -239,6 +239,8 @@ where
     p.`propertylandusetypeid` = 261
     and p.`bathroomcnt` * p.`bedroomcnt` <> 0
     and p.`calculatedfinishedsquarefeet` is not null
+    and p.`calculatedfinishedsquarefeet` > 0
+    and p.`structuretaxvaluedollarcnt` is not null
     and p.`latitude` is not null
     and p.`longitude` is not null;
 '''
