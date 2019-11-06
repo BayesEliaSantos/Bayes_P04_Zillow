@@ -1,4 +1,4 @@
-##Readme
+##Readme 
 
 Goal: Improve our original estimate of the log error by using clustering methodologies.
 
@@ -9,12 +9,29 @@ Goal: Improve our original estimate of the log error by using clustering methodo
 
 
 Acquisition 
+Pulled from zillow SQL Database
+
 
 Prep
 
+Baseline- Bathroom count, Bedroom count, and square feet =====> Target: Logerror
+    -Get rid of values with zero
+    -Ran remove_outliers_iqr to find and remove outliers
+
+MVP
+
+
+
+Split
+
+Baseline- Split our baseline data (bathrooms, bedrooms and squarefeet with Logerror)
 
 Initial Exploration
 
+Baseline-
+    -Will run a elbow test to determine optimal number of clusters for visualization of the Baseline
+    - Will have a Pairplot and a 2D scatter to show clusters 
+    
 
 
 Exploration with Clustering- Target(y) = LOGERROR
@@ -27,4 +44,26 @@ Cluster Independent Variables
  1- Location(zipcode -> Section -> Neighborhood)
     2- Lot size
     3- Livable Squarefeet
+
+
+Test the Significance of Clusters
+
+
+
+Modeling
+
+Feature Engineering-
+    
+
+
+Modeling 
+
+Linear Regression
+
+Decision Tree
+
+KNN
+
+
+Clustering
 
