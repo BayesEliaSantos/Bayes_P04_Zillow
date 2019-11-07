@@ -1,6 +1,6 @@
 from env import host, user, password
 from debug import local_settings, timeifdebug, timeargsifdebug, frame_splain
-from acquire import sql_df
+from acquire import sql_df, csv_df, check_df
 from dfo import DFO
 
 
@@ -247,21 +247,83 @@ where
 }
 
 
+keep_cols={
+    'mvp': [
+        'parcelid',
+        'bathroomcnt', 
+        'bedroomcnt', 
+        'calculatedfinishedsquarefeet', 
+        'latitude', 
+        'longitude', 
+        'structuretaxvaluedollarcnt', 
+        'structuredollarpersqft', 
+        'logerror'
+    ]
+}
+
+
 @timeifdebug
-def get_zillow_data(sql=sqls['full'], splain=local_settings.splain, **kwargs):
+def get_zillow_data(sql=sqls['full'], db='zillow', splain=local_settings.splain, **kwargs):
     '''
     get_zillow_data(splain=local_settings.splain, **kwargs)
     RETURNS: dataframe
 
     The output of this function passes through sql_df() and check_df().
     '''
-    return sql_df(sql=sql, db='zillow', splain=splain, **kwargs)
+    return sql_df(sql=sql, db=db, splain=splain, **kwargs)
 
 
 def prep_zillow_data(dfo=None, df=None, splain=local_settings.splain, **kwargs):
     if dfo is None:
         dfo = set_dfo(get_zillow_data(), splain=splain)
+        df = dfo.df
     if df is None:
         df = dfo.df
     df = convert_to_dates(df, cols=['transactiondate'])
 
+
+@timeifdebug
+def refresh_zillow_csv(sql=sqls['full'], db='zillow', output_csv='zillow_local_mvp.csv', sep='|', splain=local_settings.splain, **kwargs):
+    df = get_zillow_data(sql=sql, db=db, splain=splain)
+    df.to_csv(path_or_buf=output_csv, 
+        sep=sep, 
+        na_rep='', 
+        float_format=None, 
+        columns=None, 
+        header=True, 
+        index=True, 
+        index_label=None, 
+        mode='w', 
+        encoding=None, 
+        compression='infer', 
+        quoting=None, 
+        quotechar='"', 
+        line_terminator=None, 
+        chunksize=None, 
+        date_format=None, 
+        doublequote=True, 
+        escapechar=None, 
+        decimal='.')
+    
+    
+@timeifdebug    
+def get_zillow_local_data(csv='zillow_local.csv', splain=local_settings.splain, sep='|', **kwargs):    
+    return csv_df(csv, sep=sep, splain=local_settings.splain, **kwargs)
+
+
+@timeifdebug
+def reduce_df_to_cols(df, column_list=keep_cols['mvp'], csv='zillow_local.csv', sep='|', **kwargs):
+    get_zillow_local_data(csv=csv, sep=sep, **kwargs)
+    col_list = [col for col in column_list if col in df.columns]
+    new_df = df[col_list]
+
+    return check_df(new_df, splain=local_settings.splain, **kwargs)
+
+
+if __name__ == '__main__':
+    
+    local_settings.debug = True
+    local_settings.splain = True
+    
+    refresh_zillow_csv()
+    reduce_df_to_cols(get_zillow_local_data(splain=False))
