@@ -8,6 +8,8 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+from matplotlib.lines import Line2D
+
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.cluster import KMeans
 
@@ -32,15 +34,22 @@ from debug import local_settings, timeifdebug, timeargsifdebug, frame_splain
 from dfo import DFO
 
 
+@timeifdebug
 def distance(p, q):
     return math.sqrt((p.petal_length - q.petal_length)**2 +
                      (p.petal_width - q.petal_width)**2)
 
+@timeifdebug
 def find_cluster(row: pd.Series):
     distances = centers.apply(lambda center: distance(center, row), axis=1)
     return distances.idxmin()
 
 
+###############################################################################
+### cluster plot functions                                                  ###
+###############################################################################
+
+@timeifdebug
 def plot_2d_clusters(df, x_col, y_col, c_col, alpha=.05, marker='x', s=1000, c='black', **kwargs):
     centers = df.groupby(c_col).mean()
     for cluster in df[c_col].unique():
@@ -49,13 +58,14 @@ def plot_2d_clusters(df, x_col, y_col, c_col, alpha=.05, marker='x', s=1000, c='
     plt.xlabel(x_col)
     plt.ylabel(y_col)
     plt.legend()
-    plt.scatter(centers[x_col], centers[y_col], marker=marker, s=s, c=c)
+    plt.scatter(centers[x_col], centers[y_col], marker=marker, s=s, c=c, **kwargs)
 
 
 ###############################################################################
 ### kmeans functions                                                        ###
 ###############################################################################
 
+@timeifdebug
 def compare_ks(df_subset, min_k=1, max_k=10, max_k_pct=.5, **kwargs):
     
     k_values = []
@@ -77,6 +87,7 @@ def compare_ks(df_subset, min_k=1, max_k=10, max_k_pct=.5, **kwargs):
     plt.ylabel('inertia')
 
 
+@timeifdebug
 def set_kmeans_clusters(df_subset, n_clusters=5):
     kmeans = KMeans(n_clusters).fit(df_subset)
     df_subset['cluster'] = kmeans.labels_

@@ -369,6 +369,7 @@ def get_column_values_stats(
         max_uniques=10, 
         target_col='',
         limit_to_max=False,
+        allow_zero_cols=False,
         **kwargs
         ):
     '''
@@ -378,6 +379,7 @@ def get_column_values_stats(
         max_uniques=10, 
         target_col='', 
         limit_to_max=False,
+        allow_zero_cols=False,
         **kwargs
         )
     RETURNS summary dataframe
@@ -392,8 +394,8 @@ def get_column_values_stats(
         num_rows_missing: number of rows with missing values
         pct_rows_missing: percentage of rows with missing values
         num_uniques: number of unique values 
-        unique_values: list of unique values if the unique value count is less than 
-            or equal to max_uniques.
+        unique_values: list of unique values if the unique value count is less 
+            than or equal to max_uniques.
         
     If the input dataframe contains the target column, enter that name as the 
     target_col argument and it will be removed from the analysis.
@@ -401,6 +403,11 @@ def get_column_values_stats(
     If limit_to_max is True (default), the resulting dataframe will only show
     columns with no more unique values than specified in max_uniques.
     
+    If allow_zero_cols is True, the resulting dataframe will return no rows if 
+        there are no columns found meeting the selection criteria. If False 
+        (default), all columns from the input dataframe will be returned.
+
+
     NOTE: This function can be used to identify and then re-type catergorical
     columns. Run the function with the following parameters, change the data 
     types of know categorical values to 'category', then re-run this function, 
@@ -417,10 +424,10 @@ def get_column_values_stats(
     # get rowcount
     num_recs = len(df)
     
+    # ensure all use_cols are actually present in df
+    use_cols = [col for col in get_cols if col in df.columns]
     # if no columns presented, get all columns from df
-    use_cols = df.columns if len(get_cols) == 0 else get_cols
-    # ensure use_cols are actually present in df
-    cols = [col for col in use_cols if col in df.columns]
+    cols = df.columns if len(use_cols) == 0 else get_cols
     
     # make df for all columns, exclude target column if passed
     df_cols = pd.DataFrame(cols, columns=['cols'])
