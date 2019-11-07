@@ -3,10 +3,27 @@ Planning for project
 Day 1-
 Acquire
 Clean
-MVP- Cluster and model- 
+Baseline- Cluster and model- 
 
-MVP:
+Baseline:
     1 Bedrooms
     2 Bathrooms
     3 Sq feet
     4. Lat and Long
+cluster target(logerror) w/ Baseline
+
+
+
+DAy 2- Baseline- 
+1- bathroom, bedroom, square feet=: R=.12
+2- Longtidude, latitude, price oper square feet: R=.13
+
+
+CLustering by location (latitutde and Longitude)
+
+Feature engineer within a few clusters
+
+Use decision Tree, LInear regression, or Decision Tree
+
+
+
