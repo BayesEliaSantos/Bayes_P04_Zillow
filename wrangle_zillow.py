@@ -283,7 +283,7 @@ def prep_zillow_data(dfo=None, df=None, splain=local_settings.splain, **kwargs):
 
 
 @timeifdebug
-def refresh_zillow_csv(sql=sqls['mvp'], db='zillow', output_csv='zillow_local_mvp.csv', sep='|', splain=local_settings.splain, **kwargs):
+def refresh_zillow_csv(sql=sqls['full'], db='zillow', output_csv='zillow_local_mvp.csv', sep='|', splain=local_settings.splain, **kwargs):
     df = get_zillow_data(sql=sql, db=db, splain=splain)
     df.to_csv(path_or_buf=output_csv, 
         sep=sep, 
