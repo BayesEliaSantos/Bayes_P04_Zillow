@@ -29,7 +29,10 @@ Baseline- Split our baseline data (bathrooms, bedrooms and squarefeet with Loger
 Initial Exploration
 
 Baseline-
-    -Will run a elbow test to determine optimal number of clusters for visualization of the Baseline
+    -Will run a elbow test to determine optimal number of clusters for visualization of the Baseline- 
+
+Optimal clusters with baseliune data: 5
+    
     - Will have a Pairplot and a 2D scatter to show clusters 
     
 
@@ -67,3 +70,19 @@ KNN
 
 Clustering
 
+
+
+
+Baseline:
+
+bathroom
+bedroom
+squarefeet
+
+lat and long
+price per sq foot
+
+Cluster
+
+
+within cluster feature engineer to come up with optimal Modeling
