@@ -52,14 +52,17 @@ def find_cluster(row: pd.Series):
 @timeifdebug
 def plot_2d_clusters(df, x_col, y_col, c_col, alpha=.05, marker='x', s=1000, c='black', **kwargs):
     centers = df.groupby(c_col).mean()
-    for cluster in df[c_col].unique():
+    clusters=sorted(df[c_col].unique())
+#    print(centers[[x_col,y_col]])
+    for cluster in clusters:
         subset = df[df[c_col] == cluster]
-        plt.scatter(df[x_col], df[y_col], label=cluster, alpha=alpha)
+        plt.scatter(df[x_col], df[y_col], label='cluster '+str(cluster), alpha=alpha)
     plt.xlabel(x_col)
     plt.ylabel(y_col)
     plt.legend()
-    plt.scatter(centers[x_col], centers[y_col], marker=marker, s=s, c=c, **kwargs)
-
+#    plt.scatter(centers[x_col], centers[y_col], marker=marker, s=s, c=c, **kwargs)
+    for cluster in clusters:
+        plt.text(centers[x_col][cluster], centers[y_col][cluster], cluster, fontsize=18)
 
 ###############################################################################
 ### kmeans functions                                                        ###
