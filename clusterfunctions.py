@@ -88,8 +88,8 @@ def compare_ks(df_subset, min_k=1, max_k=10, max_k_pct=.5, **kwargs):
 
 
 @timeifdebug
-def set_kmeans_clusters(df_subset, n_clusters=5):
-    kmeans = KMeans(n_clusters).fit(df_subset)
+def set_kmeans_clusters(df_subset, n_clusters=5, random_state=12345):
+    kmeans = KMeans(n_clusters, random_state=12345).fit(df_subset)
     df_subset['cluster'] = kmeans.labels_
     return df_subset
 
