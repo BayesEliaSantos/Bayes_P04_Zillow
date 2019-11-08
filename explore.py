@@ -254,29 +254,37 @@ def bool_ttest_single_uniq(df, target_column='target', check_column='check', alp
 
     p_list = []
     uniq_vals = sorted(df[check_column].unique())
-    #tgt_name = target_column
-    #chk_name = check_column
+    print(uniq_vals)
     for val in uniq_vals:
         is_true = df[df[check_column] == val]
+        num_true = len(is_true)
         y_if_true = is_true[target_column].mean()
+        std_if_true = is_true[target_column].std()
         y_mean = df[target_column].mean()
-        t, p = stats.ttest_1samp(is_true.churn, df.churn.mean())
-        p_list.append([check_column, val, t, p, p<alpha, y_if_true, y_mean])
-    df_p = pd.DataFrame(p_list, columns=['column','value','t_stat','p_value','is_sig', col_name + '_if_value', col_name + '_mean']).set_index('column').sort_values(by='p_value')
+        y_std = df[target_column].std()
+        t, p = stats.ttest_1samp(is_true[target_column], df[target_column].mean())
+        p_list.append([check_column, val, num_true, t, p, p<alpha, y_if_true, y_mean, std_if_true, y_std])
+    df_p = (pd.DataFrame(
+        p_list, 
+        columns=[
+            'column','value','count','t_stat','p_value','is_sig',
+            target_column+'_if_value',target_column+'_mean',
+            'std_if_value','std_all'])
+        .set_index(['value'])
+            .sort_values(by='p_value'))
     return df_p
 
+# @timeifdebug
+# def bool_ttest_multi_uniq(df, target_column='target', column_list=[], compare_val=True, alpha=.05, **kwargs):
+#     col_name = target_column
+#     p_list = []
+#     for col in column_list:
+#         is_true = df[df[col] == compare_val][col_name]
+#         is_not = df[df[col] != compare_val][col_name]
+#         y_if_true = is_true.mean()
+#         y_if_not = is_not.mean()
+#         t, p = stats.ttest_ind(is_true, is_not)
+#         p_list.append([col, t, p, p<alpha, y_if_true, y_if_not])
 
-@timeifdebug
-def bool_ttest_multi_uniq(df, target_column='target', column_list=[], compare_val=True, alpha=.05, **kwargs):
-    col_name = target_column
-    p_list = []
-    for col in column_list:
-        is_true = df[df[col] == compare_val][col_name]
-        is_not = df[df[col] != compare_val][col_name]
-        y_if_true = is_true.mean()
-        y_if_not = is_not.mean()
-        t, p = stats.ttest_ind(is_true, is_not)
-        p_list.append([col, t, p, p<alpha, y_if_true, y_if_not])
-
-    df_p2 = pd.DataFrame(p_list, columns=['column','t_stat','p_value','is_sig', col_name + '_if_true', col_name + '_if_not']).set_index('column').sort_values(by='p_value')
-    return df_p2
+#     df_p2 = pd.DataFrame(p_list, columns=['column','t_stat','p_value','is_sig', col_name + '_if_true', col_name + '_if_not']).set_index('column').sort_values(by='p_value')
+#     return df_p2
