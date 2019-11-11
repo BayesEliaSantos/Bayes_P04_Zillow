@@ -1,88 +1,66 @@
-##Readme 
+Zillow Project README
+
+# Zillow Clustering Test- Kevin Eliasen, Matt Santos
 
 Goal: Improve our original estimate of the log error by using clustering methodologies.
+Using previous knowledge from a Regression modeling project, we are tasked with improving upon that using clustering. 
 
-3 features to focus on:
-    1- Location(zipcode -> Section -> Neighborhood)
-    2- Lot size
-    3- Livable Squarefeet (calculated squarefeet- ((number of bedrooms* bedroom size) + (bathroom count * bathroom size))
+Hypothesis: Location is the  biggest driver of price and also the biggest driver of the Zestimate error (logerror).
 
 
-Acquisition 
-Pulled from zillow SQL Database
+### Prerequisites
+The code was written in Python 3.7.3 and you will need to have pandas, numpy, matplotlib,seaborn, and sklearn installed. Additionally, you will need access to the Zillow dataset which can be found at https://www.kaggle.com/c/zillow-prize-1/data
 
 
-Prep
+Project Github link: https://github.com/BayesEliaSantos/Bayes_P04_Zillow
+Files needed from repo:
+•	acquire.py
+•	clusterfunctions.py
+•	debug.py
+•	dfo.py
+•	evaluate.py
+•	explore.py
+•	model.py
+•	prepare.py
+•	wranglezillow.py
+## Getting Started
+Acquire and prepare:
+-Acquire data from mySQL using the python module to connect and query. You will want to end with a single dataframe. Make sure to include: the logerror, all fields related to the properties that are available. You will end up using all the tables in the database.
 
-Baseline- Bathroom count, Bedroom count, and square feet =====> Target: Logerror
-    -Get rid of values with zero
-    -Ran remove_outliers_iqr to find and remove outliers
+Explore:
+-	use visualizations to come up with possible variations of the data to use in your model
 
-MVP
+Split and Scale:
+-	Prepare your dataframe for the models, splitting yoiur data into a test and train data, and scale your data as needed. 
 
+Modeling:
+-	We recommend using clustering to narrow your data to find the drivers of the logerror (dependent variable)
+-	Use many different models: linear regression, logistic regression, Decision tree, etc. with this data set to improve the model.
+Test:
+-	Test your model using the split data sets to see if you’ve improved the model.
 
+Our process:
 
-Split
+Baseline: WE used linear regression against basic variables to establish a baseline for comparison. 
 
-Baseline- Split our baseline data (bathrooms, bedrooms and squarefeet with Logerror)
+Independent variables: Bathrooms, Bedrooms, and square feet
+Dependent Variable: Logerror
 
-Initial Exploration
+Baseline Model=
 
-Baseline-
-    -Will run a elbow test to determine optimal number of clusters for visualization of the Baseline- 
-
-Optimal clusters with baseliune data: 5
-    
-    - Will have a Pairplot and a 2D scatter to show clusters 
-    
-
-
-Exploration with Clustering- Target(y) = LOGERROR
-
-
-
-Cluster Independent Variables
-
-
- 1- Location(zipcode -> Section -> Neighborhood)
-    2- Lot size
-    3- Livable Squarefeet
-
-
-Test the Significance of Clusters
-
-
-
-Modeling
-
-Feature Engineering-
-    
+Cluster:
+We clustered the data by latitude, longitude, and price per square feet (more weighted) to isolate those houses by location in order to find the other drivers beyond location-based variables. 
 
 
-Modeling 
+Linear Regression with Clusters:
 
-Linear Regression
+We ran the Linear Regression for all the clusters where the p-value was under .05.
 
-Decision Tree
+4 of the 8 clusters met this criteria.
 
-KNN
+We used the same independent variables from the baseline
 
-
-Clustering
-
-
+Independent variables: Bathrooms, Bedrooms, and square feet
+Dependent Variable: Logerror
 
 
-Baseline:
-
-bathroom
-bedroom
-squarefeet
-
-lat and long
-price per sq foot
-
-Cluster
-
-
-within cluster feature engineer to come up with optimal Modeling
