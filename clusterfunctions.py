@@ -57,7 +57,7 @@ def plot_2d_clusters(df, x_col, y_col, c_col, alpha=.05, marker='x', s=1000, c='
 #    print(centers[[x_col,y_col]])
     for cluster in clusters:
         subset = df[df[c_col] == cluster]
-        plt.scatter(df[x_col], df[y_col], label='cluster '+str(cluster), s=200, marker='o', alpha=alpha, c=sns_colors[cluster])
+        plt.scatter(df[x_col], df[y_col], label='cluster '+str(cluster), s=2, marker='o', alpha=alpha, c=sns_colors[cluster])
         plt.text(centers[x_col][cluster], centers[y_col][cluster], cluster, fontsize=24, c=sns_colors[cluster])
     plt.xlabel(x_col)
     plt.ylabel(y_col)
@@ -96,7 +96,7 @@ def compare_ks(df_subset, min_k=1, max_k=10, max_k_pct=.5, **kwargs):
 def set_kmeans_clusters(df_subset, n_clusters=5, random_state=12345):
     kmeans = KMeans(n_clusters, random_state=12345).fit(df_subset)
     df_subset['cluster'] = kmeans.labels_
-    return df_subset
+    return df_subset, kmeans
 
 
 

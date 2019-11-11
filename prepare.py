@@ -31,7 +31,7 @@ from dfo import DFO, set_dfo
 ###############################################################################
 
 @timeifdebug
-def is_in_both()
+def is_in_both():
     pass
 
 @timeifdebug
