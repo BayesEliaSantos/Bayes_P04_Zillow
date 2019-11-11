@@ -51,18 +51,20 @@ def find_cluster(row: pd.Series):
 
 @timeifdebug
 def plot_2d_clusters(df, x_col, y_col, c_col, alpha=.05, marker='x', s=1000, c='black', **kwargs):
+    sns_colors=sns.color_palette().as_hex()
     centers = df.groupby(c_col).mean()
     clusters=sorted(df[c_col].unique())
 #    print(centers[[x_col,y_col]])
     for cluster in clusters:
         subset = df[df[c_col] == cluster]
-        plt.scatter(df[x_col], df[y_col], label='cluster '+str(cluster), alpha=alpha)
+        plt.scatter(df[x_col], df[y_col], label='cluster '+str(cluster), s=200, marker='o', alpha=alpha, c=sns_colors[cluster])
+        plt.text(centers[x_col][cluster], centers[y_col][cluster], cluster, fontsize=24, c=sns_colors[cluster])
     plt.xlabel(x_col)
     plt.ylabel(y_col)
     plt.legend()
-#    plt.scatter(centers[x_col], centers[y_col], marker=marker, s=s, c=c, **kwargs)
-    for cluster in clusters:
-        plt.text(centers[x_col][cluster], centers[y_col][cluster], cluster, fontsize=18)
+    # plt.scatter(centers[x_col], centers[y_col], marker=marker, s=s, c=c, **kwargs)
+    # for cluster in clusters:
+    #     plt.text(centers[x_col][cluster], centers[y_col][cluster], cluster, fontsize=18)
 
 ###############################################################################
 ### kmeans functions                                                        ###
