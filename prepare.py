@@ -432,7 +432,7 @@ def get_column_values_stats(
     # ensure all use_cols are actually present in df
     use_cols = [col for col in get_cols if col in df.columns]
     # if no columns presented, get all columns from df
-    cols = df.columns if len(use_cols) == 0 else get_cols
+    cols = df.columns if len(use_cols) == 0 and allow_zero_cols==False else get_cols
     
     # make df for all columns, exclude target column if passed
     df_cols = pd.DataFrame(cols, columns=['cols'])
