@@ -1,0 +1,1967 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>zillow</string>
+			<key>host</key>
+			<string>157.230.209.171</string>
+			<key>kcid</key>
+			<string>7204045793612209806</string>
+			<key>name</key>
+			<string>Data Science Databases</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>bayes_814</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>latin1</string>
+			<key>contentFilter</key>
+			<dict/>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGOTpYJHZlcnNpb25YJG9iamVjdHNZJGFy
+			Y2hpdmVyVCR0b3ASAAGGoK0HCBUWFxgZHSQoLDE2VSRudWxs0wkK
+			CwwQFFdOUy5rZXlzWk5TLm9iamVjdHNWJGNsYXNzow0OD4ACgAOA
+			BKMREhOABYAGgAiADFR0eXBlVHJvd3NUa2V5c18QJlNlbGVjdGlv
+			bkRldGFpbFR5cGVQcmltYXJ5S2V5ZWREZXRhaWxz0wkKCxobHKCg
+			gAfSHh8gIVokY2xhc3NuYW1lWCRjbGFzc2VzXxATTlNNdXRhYmxl
+			RGljdGlvbmFyeaMgIiNcTlNEaWN0aW9uYXJ5WE5TT2JqZWN00goL
+			JSehJoAJgAvSCykqK1lOUy5zdHJpbmeACl8QFXByb3BlcnR5bGFu
+			ZHVzZXR5cGVpZNIeHy0uXxAPTlNNdXRhYmxlU3RyaW5noy0vMFhO
+			U1N0cmluZ1hOU09iamVjdNIeHzIzXk5TTXV0YWJsZUFycmF5ozI0
+			NVdOU0FycmF5WE5TT2JqZWN00h4fIjeiIjhYTlNPYmplY3RfEA9O
+			U0tleWVkQXJjaGl2ZXLROzxUZGF0YYABAAgAEQAaACMALQAyADcA
+			RQBLAFIAWgBlAGwAcAByAHQAdgB6AHwAfgCAAIIAhwCMAJEAugDB
+			AMIAwwDFAMoA1QDeAPQA+AEFAQ4BEwEVARcBGQEeASgBKgFCAUcB
+			WQFdAWYBbwF0AYMBhwGPAZgBnQGgAakBuwG+AcMAAAAAAAACAQAA
+			AAAAAAA9AAAAAAAAAAAAAAAAAAABxQ==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {1066, 597}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	avg(abs(pt.logerror)) avgabslogerror,
+	sum(abs(pt.logerror)) sumabslogerror,
+	avg(abs(pt.logerror)) logerror,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    		predictions_2017 pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+			predictions_2017
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+-- order by 
+--	plut.propertylandusedesc
+--	is_sfr
+having
+	count(*) &lt; 25</string>
+			<key>table</key>
+			<string>propertylandusetype</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>214</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	avg(abs(pt.logerror)) avgabslogerror,
+	sum(abs(pt.logerror)) sumabslogerror,
+	avg(abs(pt.logerror)) logerror,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    		predictions_2017 pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+			predictions_2017
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+-- order by 
+--	plut.propertylandusedesc
+--	is_sfr
+having
+	count(*) &lt; 25</string>
+		<string>select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    		predictions_2017 pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+			from predictions_2017
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	avg(abs(pt.logerror)) avgabslogerror,
+	sum(abs(pt.logerror)) sumabslogerror,
+	avg(abs(pt.logerror)) logerror,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    		predictions_2017 pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+			from predictions_2017
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+-- order by 
+--	plut.propertylandusedesc
+--	is_sfr
+having
+	count(*) &lt; 25</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	avg(abs(pt.logerror)) avgabslogerror,
+	sum(abs(pt.logerror)) sumabslogerror,
+	avg(abs(pt.logerror)) logerror,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    		predictions_2017 pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+			from predictions_2017
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+-- order by 
+--	plut.propertylandusedesc
+--	is_sfr
+having
+	count(*) &lt; 25</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	avg(abs(pt.logerror)) logerror,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(-- select * from predictions_2016 
+			-- union 
+			select * from predictions_2017
+			-- order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+-- order by 
+--	plut.propertylandusedesc
+--	is_sfr
+having
+	count(*) &lt; 25</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	avg(abs(pt.logerror)) logerror,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(-- select * from predictions_2016 
+			-- union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+-- order by 
+--	plut.propertylandusedesc
+--	is_sfr
+having
+	count(*) &lt; 25</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	avg(abs(pt.logerror)) logerror,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+-- order by 
+--	plut.propertylandusedesc
+--	is_sfr
+having
+	count(*) &lt; 25</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	avg(pt.logerror) logerror,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+-- order by 
+--	plut.propertylandusedesc
+--	is_sfr
+having
+	count(*) &lt; 25</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+-- order by 
+--	plut.propertylandusedesc
+--	is_sfr
+having
+	count(*) &lt; 25</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+-- order by 
+--	plut.propertylandusedesc
+--	is_sfr
+having
+	count(*) &lt; 50</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+-- order by 
+--	plut.propertylandusedesc
+--	is_sfr</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+ order by 
+--	plut.propertylandusedesc
+--	is_sfr</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+ order by 
+--	plut.propertylandusedesc
+	is_sfr</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+-- order by plut.propertylandusedesc</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+	p.propertylandusetypeid,
+	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood -- ,
+--	p.regionidzip
+-- order by plut.propertylandusedesc</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+	p.propertylandusetypeid,
+	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+--	p.propertylandusetypeid,
+--	plut.propertylandusedesc -- ,
+	p.regionidcounty,
+	p.regionidcity,
+	p.regionidneighborhood,
+--	p.regionidzip
+order by plut.propertylandusedesc</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+--	p.regionidcounty,
+--	p.regionidcity,
+--	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+	p.propertylandusetypeid,
+	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+	and p.structuretaxvaluedollarcnt is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+	p.propertylandusetypeid,
+	plut.propertylandusedesc -- ,
+--	p.regionidcounty,
+--	p.regionidcity,
+--	p.regionidneighborhood,
+--	p.regionidzip
+order by plut.propertylandusedesc</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+--	p.regionidcounty,
+--	p.regionidcity,
+--	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+	p.propertylandusetypeid,
+	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+--	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+	p.propertylandusetypeid,
+	plut.propertylandusedesc -- ,
+--	p.regionidcounty,
+--	p.regionidcity,
+--	p.regionidneighborhood,
+--	p.regionidzip
+order by plut.propertylandusedesc</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+--	p.regionidcounty,
+--	p.regionidcity,
+--	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+	p.propertylandusetypeid,
+	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) and (p.unitcnt is null or p.unitcnt = 1))
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+	p.propertylandusetypeid,
+	plut.propertylandusedesc -- ,
+--	p.regionidcounty,
+--	p.regionidcity,
+--	p.regionidneighborhood,
+--	p.regionidzip
+order by plut.propertylandusedesc</string>
+		<string>select 
+--	p.id,
+--	p.fips,
+--	p.regionidcounty,
+--	p.regionidcity,
+--	p.regionidneighborhood,
+--	p.regionidzip,
+--	p.parcelid,
+--	p.calculatedfinishedsquarefeet,
+--	p.landtaxvaluedollarcnt,
+--	p.lotsizesquarefeet,
+--	p.longitude,
+--	p.latitude,
+	p.propertylandusetypeid,
+	plut.propertylandusedesc,
+	count(*),
+	avg(case when pt.transactions is null then 0 else 1 end) has_trans,
+	avg(case when p.propertylandusetypeid = 261 then 1 else 0 end) is_sfr,
+	avg(case when p.unitcnt is null then 0 else 1 end) has_unit,
+	avg(case when p.unitcnt = 1 then 1 else 0 end) is_single,
+	avg(case when p.calculatedfinishedsquarefeet is null then 0 else 1 end) has_cfsf,
+	avg(case when p.lotsizesquarefeet is null then 0 else 1 end) has_lssf,
+	avg(case when p.structuretaxvaluedollarcnt is null then 0 else 1 end) has_stvdc,
+	avg(case when p.landtaxvaluedollarcnt is null then 0 else 1 end) has_ltvdc,
+	avg(case when p.taxvaluedollarcnt is null then 0 else 1 end) has_tvdc,
+	avg(case when p.longitude is null then 0 else 1 end) has_longitude,
+	avg(case when p.latitude is null then 0 else 1 end) has_latitude,
+	'fin' fin
+    from 
+        `properties_2017` p
+    left join (
+    	select
+	    	pred.parcelid,
+    		pred.transactiondate,
+    		pred.logerror,
+    		m.transactions
+    	from
+    	
+    	(select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) pred
+    	inner join 
+        (select 
+            `parcelid`, 
+            max(`transactiondate`) `lasttransactiondate`, 
+            max(`id`) `maxid`, 
+            count(*) `transactions`
+        from 
+            (select * from predictions_2016 
+			union 
+			select * from predictions_2017
+			order by `parcelid`, `transactiondate`
+			) preds
+        group by 
+            `parcelid`
+        ) m
+        on 
+        pred.parcelid = m.parcelid
+        and pred.transactiondate = m.lasttransactiondate
+    ) pt
+	on p.`parcelid` = pt.`parcelid` 
+left join
+	propertylandusetype plut
+	using(propertylandusetypeid)        
+where
+--	p.propertylandusetypeid is null
+	p.regionidzip is not null
+	and p.propertylandusetypeid not in ( 260, 261, 269 )
+	and (p.propertylandusetypeid in ( 260, 261, 269 ) or p.unitcnt = 1)
+	and p.lotsizesquarefeet is not null
+	and p.calculatedfinishedsquarefeet is not null
+--	p.latitude is not null
+--	and p.longitude is not null
+	-- and p.calculatedfinishedsquarefeet is null
+--	and (
+--	p.calculatedfinishedsquarefeet is null &lt;&gt; p.structuretaxvaluedollarcnt is null
+--	or p.lotsizesquarefeet is null &lt;&gt; p.landtaxvaluedollarcnt is null
+--	or p.taxvaluedollarcnt is null
+--	)
+group by
+--	p.fips, 
+	p.propertylandusetypeid,
+	plut.propertylandusedesc -- ,
+--	p.regionidcounty,
+--	p.regionidcity,
+--	p.regionidneighborhood,
+--	p.regionidzip
+order by plut.propertylandusedesc</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.7.27-0ubuntu0.18.04.1-log</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
