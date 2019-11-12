@@ -41,15 +41,17 @@ Test:
 
 Our process:
 
-Baseline: WE used linear regression against basic variables to establish a baseline for comparison. 
+Cluster:
+We clustered the data by latitude, longitude, and price per square feet (more weighted) to isolate those houses by location in order to find the other drivers beyond location-based variables. 
+
+
+Baseline: We used linear regression against basic variables to establish a baseline for comparison. 
 
 Independent variables: Bathrooms, Bedrooms, and square feet
 Dependent Variable: Logerror
 
-Baseline Model=
+Baseline Model= RMSE= .178
 
-Cluster:
-We clustered the data by latitude, longitude, and price per square feet (more weighted) to isolate those houses by location in order to find the other drivers beyond location-based variables. 
 
 
 Linear Regression with Clusters:
@@ -58,9 +60,33 @@ We ran the Linear Regression for all the clusters where the p-value was under .0
 
 4 of the 8 clusters met this criteria.
 
+We ran a model for cluster 6
+
 We used the same independent variables from the baseline
 
 Independent variables: Bathrooms, Bedrooms, and square feet
 Dependent Variable: Logerror
+
+Cluster 6 RMSE= .141
+
+
+With these results of the separate clusters, we added 
+
+“price per square foot” to the model to improve:
+
+Independent variables: Bathrooms, Bedrooms, square feet, and structuredollarpersqft
+
+Dependent Variable: Logerror
+
+
+
+Cluster with Decision tree
+Independent variables: Bathrooms, Bedrooms, square feet, and structuredollarpersqft
+Dependent Variable: Logerror
+
+
+Decisioj Tree= RMSE .175
+
+
 
 
